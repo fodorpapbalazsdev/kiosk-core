@@ -1,16 +1,16 @@
 package models;
 
 import exceptions.FieldNotFoundException;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NonNull;
 
 import java.util.Date;
 import java.util.Map;
 
-
-@Data
 public class PlannableItem extends Item {
+
     @NonNull
+    @Getter
     final Date plannedDate;
 
     public PlannableItem(Map<String, Object> fields, String plannableFieldName) throws Exception {
