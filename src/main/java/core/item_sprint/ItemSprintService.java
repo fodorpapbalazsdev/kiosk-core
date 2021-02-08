@@ -1,7 +1,11 @@
 package core.item_sprint;
 
-import models.PlannableDateField;
+import models.PlannableItem;
+
+import java.util.List;
 
 public interface ItemSprintService {
-    boolean itemIsPlannedForNextSprint(PlannableDateField item);
+    List<PlannableItem> getNextSprintItems(List<PlannableItem> items);
+
+    boolean itemIsPlannedForNextSprint(PlannableItem item);
 }
