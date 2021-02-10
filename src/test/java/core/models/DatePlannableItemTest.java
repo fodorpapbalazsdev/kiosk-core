@@ -1,4 +1,4 @@
-package models;
+package core.models;
 
 import exceptions.FieldNotFoundException;
 import lombok.SneakyThrows;
@@ -9,10 +9,11 @@ import java.sql.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @DisplayName("PlannableItemTest")
-class PlannableItemTest {
+class DatePlannableItemTest {
 
     final Date testDate = Date.valueOf("2021-02-20");
 
@@ -24,10 +25,10 @@ class PlannableItemTest {
         fields.put("PCD", testDate);
         fields.put("Summary", "Lorem ipsum");
         fields.put("Assigned User", "Dummy Username");
-        PlannableItem plannableItem = new PlannableItem(fields, "PCD");
-        assertEquals(testDate, plannableItem.getPlannedDate());
-        assertEquals(plannableItem.getFields().size(), 3);
-        assertEquals(plannableItem.getFields().get("Assigned User"), "Dummy Username");
+        DatePlannableItem datePlannableItem = new DatePlannableItem(fields, "PCD");
+        assertEquals(testDate, datePlannableItem.getPlanBaseFieldVale());
+        assertEquals(datePlannableItem.getFields().size(), 3);
+        assertEquals(datePlannableItem.getFields().get("Assigned User"), "Dummy Username");
     }
 
     @Test
@@ -36,7 +37,7 @@ class PlannableItemTest {
     public void createPlannableItem_shouldThrowException() {
         Map<String, Object> fields = new HashMap<>();
         fields.put("PCD", "2021-02-20");
-        assertThrows(Exception.class, () -> new PlannableItem(fields, "PCD"));
+        assertThrows(Exception.class, () -> new DatePlannableItem(fields, "PCD"));
     }
 
     @Test
@@ -45,7 +46,7 @@ class PlannableItemTest {
     public void createPlannableItemShouldThrowExceptionWhenGivenFieldNotFound() {
         Map<String, Object> fields = new HashMap<>();
         fields.put("Due Date", testDate);
-        assertThrows(FieldNotFoundException.class, () -> new PlannableItem(fields, "PCD"));
+        assertThrows(FieldNotFoundException.class, () -> new DatePlannableItem(fields, "PCD"));
     }
 
 }
