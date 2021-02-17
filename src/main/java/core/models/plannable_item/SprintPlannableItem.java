@@ -3,7 +3,7 @@ package core.models.plannable_item;
 import core.models.Item;
 import core.models.User;
 import core.sprint.Sprint;
-import exceptions.ItemIsPlannedForSprintNotSupportedException;
+import core.exceptions.ItemIsPlannedForSprintNotSupportedException;
 import lombok.Data;
 
 import java.util.Map;

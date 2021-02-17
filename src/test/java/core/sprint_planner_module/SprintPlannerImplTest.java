@@ -1,12 +1,12 @@
 package core.sprint_planner_module;
 
-import core.UserService;
 import core.models.User;
 import core.models.plannable_item.MKSPlannableItem;
 import core.models.plannable_item.SprintPlannableItem;
 import core.sprint.Sprint;
 import core.sprint.SprintService;
 import core.sprint_planner_module.models.SprintPlan;
+import core.util.SprintUtilImpl;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -31,6 +31,7 @@ class SprintPlannerImplTest {
     @Mock
     SprintService sprintService;
 
+
     @InjectMocks
     SprintPlannerImpl sprintPlanner;
 
@@ -51,27 +52,39 @@ class SprintPlannerImplTest {
         Map<String, Object> fields1 = new HashMap<>();
         fields1.put("PCD", Date.valueOf("2021-02-20"));  // Planned
         fields1.put("Assigned User", 1L);
-        SprintPlannableItem userDatePlannableItem1 = new MKSPlannableItem(fields1, users.get(0));
+        fields1.put("State", "OPEN");
+        MKSPlannableItem mksPlannableItem1 = new MKSPlannableItem(fields1, users.get(0));
+        mksPlannableItem1.setSprintUtil(new SprintUtilImpl());
+
 
         Map<String, Object> fields2 = new HashMap<>();
         fields2.put("PCD", Date.valueOf("2021-02-20"));  // Planned
-        fields1.put("Assigned User", 1L);
-        SprintPlannableItem userDatePlannableItem2 = new MKSPlannableItem(fields2, users.get(0));
+        fields2.put("Assigned User", 1L);
+        fields2.put("State", "OPEN");
+
+        MKSPlannableItem mksPlannableItem2 = new MKSPlannableItem(fields2, users.get(0));
+        mksPlannableItem2.setSprintUtil(new SprintUtilImpl());
+
 
         Map<String, Object> fields3 = new HashMap<>();
         fields3.put("PCD", Date.valueOf("2021-02-20"));  // Planned
-        fields1.put("Assigned User", 2L);
-        SprintPlannableItem userDatePlannableItem3 = new MKSPlannableItem(fields3, users.get(1));
+        fields3.put("Assigned User", 2L);
+        fields3.put("State", "OPEN");
+        MKSPlannableItem mksPlannableItem3 = new MKSPlannableItem(fields3, users.get(1));
+        mksPlannableItem3.setSprintUtil(new SprintUtilImpl());
+
 
         Map<String, Object> fields4 = new HashMap<>();
         fields4.put("PCD", Date.valueOf("2021-03-01"));  // NOT Planned
-        fields1.put("Assigned User", 1L);
-        SprintPlannableItem userDatePlannableItem4 = new MKSPlannableItem(fields4, users.get(2));
+        fields4.put("Assigned User", 1L);
+        fields4.put("State", "OPEN");
+        MKSPlannableItem mksPlannableItem4 = new MKSPlannableItem(fields4, users.get(2));
+        mksPlannableItem4.setSprintUtil(new SprintUtilImpl());
 
-        userPlannableItems.add(userDatePlannableItem1);
-        userPlannableItems.add(userDatePlannableItem2);
-        userPlannableItems.add(userDatePlannableItem3);
-        userPlannableItems.add(userDatePlannableItem4);
+        userPlannableItems.add(mksPlannableItem1);
+        userPlannableItems.add(mksPlannableItem2);
+        userPlannableItems.add(mksPlannableItem3);
+        userPlannableItems.add(mksPlannableItem4);
 
         SprintPlan sprintPlanResult = sprintPlanner.getNextSprintPlann(users, userPlannableItems);
 

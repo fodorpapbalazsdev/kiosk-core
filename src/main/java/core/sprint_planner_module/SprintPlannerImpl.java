@@ -7,7 +7,7 @@ import core.models.plannable_item.SprintPlannableItem;
 import core.sprint.Sprint;
 import core.sprint.SprintService;
 import core.sprint_planner_module.models.SprintPlan;
-import exceptions.ItemIsPlannedForSprintNotSupportedException;
+import core.exceptions.ItemIsPlannedForSprintNotSupportedException;
 import lombok.AllArgsConstructor;
 import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;

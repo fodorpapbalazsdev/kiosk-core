@@ -1,7 +1,7 @@
 package core.models;
 
 import core.models.plannable_item.JAZZPlannableItem;
-import exceptions.ItemIsPlannedForSprintNotSupportedException;
+import core.exceptions.ItemIsPlannedForSprintNotSupportedException;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -12,27 +12,27 @@ import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@DisplayName("ItemTypeBTest")
+@DisplayName("JAZZPlannableItemTest")
 class JAZZPlannableItemTest {
 
     final Date testDate = Date.valueOf("2021-02-20");
 
     @Test
     @SneakyThrows
-    public void createItemTypeB_shouldCreate() {
+    public void createJAZZPlannableItem_shouldCreate() {
         Map<String, Object> fields = new HashMap<>();
-        fields.put("PCD", testDate);
-        fields.put("Summary", "Lorem ipsum");
-        fields.put("Assigned User", "Dummy Username");
+        fields.put("Field 1", testDate);
+        fields.put("Field 2", "Lorem ipsum");
+        fields.put("Field 3", "Lorem ipsum");
         JAZZPlannableItem JAZZPlannableItem = new JAZZPlannableItem(fields, null);
 
         assertEquals(3, JAZZPlannableItem.getFields().size());
-        assertEquals("Dummy Username", JAZZPlannableItem.getFields().get("Assigned User"));
-        assertEquals(testDate, JAZZPlannableItem.getFields().get("PCD"));
+        assertEquals("Lorem ipsum", JAZZPlannableItem.getFields().get("Field 2"));
+        assertEquals(testDate, JAZZPlannableItem.getFields().get("Field 1"));
     }
 
     @Test
-    public void createItemTypeB_shouldThrowItemIsPlannedForSprintNotSupportedException() {
+    public void itemIsPlannedForSprint_shouldThrowItemIsPlannedForSprintNotSupportedException() {
         assertThrows(ItemIsPlannedForSprintNotSupportedException.class, () -> new JAZZPlannableItem(null, null).itemIsPlannedForSprint(null));
     }
 
