@@ -8,5 +8,5 @@ import java.util.Map;
 @Data
 @AllArgsConstructor
 public class Item {
-    final Map<String, Object> fields;
+    private final Map<String, Object> fields;
 }

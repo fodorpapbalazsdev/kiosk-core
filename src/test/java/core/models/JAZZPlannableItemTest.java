@@ -1,5 +1,6 @@
 package core.models;
 
+import core.models.plannable_item.JAZZPlannableItem;
 import exceptions.ItemIsPlannedForSprintNotSupportedException;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.DisplayName;
@@ -23,7 +24,7 @@ class JAZZPlannableItemTest {
         fields.put("PCD", testDate);
         fields.put("Summary", "Lorem ipsum");
         fields.put("Assigned User", "Dummy Username");
-        JAZZPlannableItem JAZZPlannableItem = new JAZZPlannableItem(fields);
+        JAZZPlannableItem JAZZPlannableItem = new JAZZPlannableItem(fields, null);
 
         assertEquals(3, JAZZPlannableItem.getFields().size());
         assertEquals("Dummy Username", JAZZPlannableItem.getFields().get("Assigned User"));
@@ -32,7 +33,7 @@ class JAZZPlannableItemTest {
 
     @Test
     public void createItemTypeB_shouldThrowItemIsPlannedForSprintNotSupportedException() {
-        assertThrows(ItemIsPlannedForSprintNotSupportedException.class, () -> new JAZZPlannableItem(null).itemIsPlannedForSprint(null));
+        assertThrows(ItemIsPlannedForSprintNotSupportedException.class, () -> new JAZZPlannableItem(null, null).itemIsPlannedForSprint(null));
     }
 
 }

@@ -1,10 +1,9 @@
 package core.sprint_planner_module;
 
 import core.UserService;
-import core.item_sprint.ItemSprintServiceBase;
-import core.models.DatePlannableItem;
 import core.models.User;
-import core.models.UserDatePlannableItem;
+import core.models.plannable_item.MKSPlannableItem;
+import core.models.plannable_item.SprintPlannableItem;
 import core.sprint.Sprint;
 import core.sprint.SprintService;
 import core.sprint_planner_module.models.SprintPlan;
@@ -30,13 +29,7 @@ import static org.mockito.Mockito.when;
 class SprintPlannerImplTest {
 
     @Mock
-    ItemSprintServiceBase itemSprintServiceBase;
-
-    @Mock
     SprintService sprintService;
-
-    @Mock
-    UserService userService;
 
     @InjectMocks
     SprintPlannerImpl sprintPlanner;
@@ -46,8 +39,6 @@ class SprintPlannerImplTest {
     public void getNextSprintPlann() {
 
         when(sprintService.getNextSprint()).thenReturn(new Sprint("1", Date.valueOf("2021-02-15"), Date.valueOf("2021-02-28")));
-        when(userService.getUser(1L)).thenReturn(new User(1L));
-        when(userService.getUser(2L)).thenReturn(new User(2L));
 
         /* Construct the users */
         List<User> users = new ArrayList<>();
@@ -56,35 +47,26 @@ class SprintPlannerImplTest {
         users.add(new User(3L));
 
         /* Construct the items */
-        List<UserDatePlannableItem> userPlannableItems = new ArrayList<>();
+        List<SprintPlannableItem> userPlannableItems = new ArrayList<>();
         Map<String, Object> fields1 = new HashMap<>();
         fields1.put("PCD", Date.valueOf("2021-02-20"));  // Planned
-        fields1.put("UserID", 1L);
-        DatePlannableItem datePlannableItem1 = new DatePlannableItem(fields1, "PCD");
-        UserDatePlannableItem userDatePlannableItem1 = new UserDatePlannableItem(datePlannableItem1, "UserID");
+        fields1.put("Assigned User", 1L);
+        SprintPlannableItem userDatePlannableItem1 = new MKSPlannableItem(fields1, users.get(0));
 
         Map<String, Object> fields2 = new HashMap<>();
         fields2.put("PCD", Date.valueOf("2021-02-20"));  // Planned
-        fields2.put("UserID", 1L);
-        DatePlannableItem datePlannableItem2 = new DatePlannableItem(fields2, "PCD");
-        UserDatePlannableItem userDatePlannableItem2 = new UserDatePlannableItem(datePlannableItem2, "UserID");
+        fields1.put("Assigned User", 1L);
+        SprintPlannableItem userDatePlannableItem2 = new MKSPlannableItem(fields2, users.get(0));
 
         Map<String, Object> fields3 = new HashMap<>();
         fields3.put("PCD", Date.valueOf("2021-02-20"));  // Planned
-        fields3.put("UserID", 2L);
-        DatePlannableItem datePlannableItem3 = new DatePlannableItem(fields3, "PCD");
-        UserDatePlannableItem userDatePlannableItem3 = new UserDatePlannableItem(datePlannableItem3, "UserID");
+        fields1.put("Assigned User", 2L);
+        SprintPlannableItem userDatePlannableItem3 = new MKSPlannableItem(fields3, users.get(1));
 
         Map<String, Object> fields4 = new HashMap<>();
         fields4.put("PCD", Date.valueOf("2021-03-01"));  // NOT Planned
-        fields4.put("UserID", 1L);
-        DatePlannableItem datePlannableItem4 = new DatePlannableItem(fields4, "PCD");
-        UserDatePlannableItem userDatePlannableItem4 = new UserDatePlannableItem(datePlannableItem4, "UserID");
-
-        when(itemSprintServiceBase.itemIsPlannedForNextSprint(userDatePlannableItem1)).thenReturn(true);
-        when(itemSprintServiceBase.itemIsPlannedForNextSprint(userDatePlannableItem2)).thenReturn(true);
-        when(itemSprintServiceBase.itemIsPlannedForNextSprint(userDatePlannableItem3)).thenReturn(true);
-        when(itemSprintServiceBase.itemIsPlannedForNextSprint(userDatePlannableItem4)).thenReturn(false);
+        fields1.put("Assigned User", 1L);
+        SprintPlannableItem userDatePlannableItem4 = new MKSPlannableItem(fields4, users.get(2));
 
         userPlannableItems.add(userDatePlannableItem1);
         userPlannableItems.add(userDatePlannableItem2);

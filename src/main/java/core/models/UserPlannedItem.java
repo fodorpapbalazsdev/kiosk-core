@@ -1,5 +1,6 @@
 package core.models;
 
+import core.models.plannable_item.PlannedItem;
 import lombok.Data;
 import lombok.NonNull;
 

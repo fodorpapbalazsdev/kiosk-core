@@ -1,17 +1,18 @@
-package core.models;
+package core.models.plannable_item;
 
+import core.models.Item;
 import core.sprint.Sprint;
 import lombok.Data;
 import lombok.NonNull;
 
 @Data
-public class PlannedItem extends PlannedItemBase {
+public class PlannedItem extends Item {
 
     @NonNull
     final private Sprint sprint;
 
-    public PlannedItem(PlannableItemBase item, Sprint sprint) {
-        super(item.fields);
+    public PlannedItem(Item item, Sprint sprint) {
+        super(item.getFields());
         this.sprint = sprint;
     }
 
@@ -38,7 +39,7 @@ public class PlannedItem extends PlannedItemBase {
 
         // Compare the data members and return accordingly
         return sprint.equals(other.getSprint())
-                && fields.equals(other.fields);
+                && this.getFields().equals(other.getFields());
     }
 
 }

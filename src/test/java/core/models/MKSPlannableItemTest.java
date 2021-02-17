@@ -1,5 +1,6 @@
 package core.models;
 
+import core.models.plannable_item.MKSPlannableItem;
 import core.sprint.Sprint;
 import exceptions.FieldNotFoundException;
 import lombok.SneakyThrows;
@@ -24,7 +25,7 @@ class MKSPlannableItemTest {
         fields.put("PCD", testDate);
         fields.put("Summary", "Lorem ipsum");
         fields.put("Assigned User", "Dummy Username");
-        MKSPlannableItem MKSPlannableItem = new MKSPlannableItem(fields);
+        MKSPlannableItem MKSPlannableItem = new MKSPlannableItem(fields, null);
 
         assertEquals(3, MKSPlannableItem.getFields().size());
         assertEquals("Dummy Username", MKSPlannableItem.getFields().get("Assigned User"));
@@ -36,7 +37,7 @@ class MKSPlannableItemTest {
     public void createItemTypeA_isPlanned() {
         Map<String, Object> fields = new HashMap<>();
         fields.put("PCD", testDate);
-        MKSPlannableItem MKSPlannableItem = new MKSPlannableItem(fields);
+        MKSPlannableItem MKSPlannableItem = new MKSPlannableItem(fields, null);
 
         /* Create test Sprint objects */
         Sprint sprint1 = new Sprint("1", Date.valueOf("2021-02-15"), Date.valueOf("2021-02-28"));
@@ -51,7 +52,7 @@ class MKSPlannableItemTest {
         Map<String, Object> fields = new HashMap<>();
         fields.put("Summary", "Lorem ipsum");
         fields.put("Assigned User", "Dummy Username");
-        assertThrows(FieldNotFoundException.class, () -> new MKSPlannableItem(fields));
+        assertThrows(FieldNotFoundException.class, () -> new MKSPlannableItem(fields, null));
     }
 
     @Test
@@ -60,6 +61,6 @@ class MKSPlannableItemTest {
         fields.put("PCD", 1);
         fields.put("Summary", "Lorem ipsum");
         fields.put("Assigned User", "Dummy Username");
-        assertThrows(IllegalArgumentException.class, () -> new MKSPlannableItem(fields));
+        assertThrows(IllegalArgumentException.class, () -> new MKSPlannableItem(fields, null));
     }
 }
