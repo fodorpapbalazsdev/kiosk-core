@@ -46,7 +46,8 @@ public class SprintPlannerImpl implements SprintPlanner {
                     try {
                         return i.itemIsPlannedForSprint(nextSprint);
                     } catch (ItemIsPlannedForSprintNotSupportedException e) {
-                        return false;
+                        e.printStackTrace();
+                        return false; // TODO: Exception handling needed
                     }
                 })
                 .map(it -> getUserPlannedItem(it, nextSprint))
